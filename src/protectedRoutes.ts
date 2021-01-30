@@ -1,0 +1,31 @@
+import { SwaggerRouter } from "koa-swagger-decorator";
+import { user, task } from "./controller";
+
+const protectedRouter = new SwaggerRouter();
+
+// USER ROUTES
+protectedRouter.get("/users", user.getUsers);
+protectedRouter.get("/users/:id", user.getUser);
+protectedRouter.post("/users", user.createUser);
+protectedRouter.put("/users/:id", user.updateUser);
+protectedRouter.delete("/users/:id", user.deleteUser);
+
+// Task ROUTES
+protectedRouter.get("/tasks", task.getTasks);
+protectedRouter.get("/tasks/:id", task.getTask);
+protectedRouter.post("/tasks", task.createTask);
+protectedRouter.put("/tasks/:id", task.updateTask);
+protectedRouter.delete("/tasks/:id", task.deleteTask);
+
+
+// Swagger endpoint
+protectedRouter.swagger({
+    title: "node-typescript-koa-rest",
+    description: "API REST using NodeJS and KOA framework, typescript. TypeORM for SQL with class-validators. Middlewares JWT, CORS, Winston Logger.",
+    version: "1.5.0"
+});
+
+// mapDir will scan the input dir, and automatically call router.map to all Router Class
+protectedRouter.mapDir(__dirname);
+
+export { protectedRouter };
